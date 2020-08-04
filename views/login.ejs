@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <form method="post" id="myform">
+        <fieldset>
+            <legend>SignIn</legend>
+            <div id="warn-div">
+            </div>
+            <table>
+                <tr>
+                    <td>username</td>
+                    <td><input type="text" name="username" id="username"></td>
+                </tr>
+                <tr>
+                    <td>password</td>
+                    <td><input type="password" name="password" id="password"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" name="submit" value="Submit"></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+
+    <script>
+        $('#myform').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '/login',
+                method: 'POST',
+                dataType: 'JSON',
+                data: {
+                    username: $('#username').val(),
+                    password: $('#password').val(),
+                },
+                success: function (data) {
+                    if (data.status == 'valid') {
+                        console.log('else');
+                        window.location.href = '/admin';
+                    } else {
+                        $('#warn-div').html('Incorrect Login Information');
+                    }
+                },
+            });
+        });
+    </script>
+</body>
+
+</html>
